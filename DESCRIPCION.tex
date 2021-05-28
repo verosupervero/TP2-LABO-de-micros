@@ -1,0 +1,14 @@
+\section{Descripción del proyecto}\label{sec:intro}
+\par Se conectarán el display de 7 segmentos, los dos pulsadores y el Arduino UNO de acuerdo a como se indica en el esquemático. El punto decimal del display no se utilizará.
+
+\par Cada segmento del display es un LED, que como sabemos tienen polaridad. Según el modelo de display, los cátodos de todos los LEDs están conectados a GND y por lo tanto los LEDs se encenderán sólo al colocar un “1” lógico.
+\par La elección de qué pines se usaron para la conexión puede también observarse en el esquemático.
+\par Respecto a los pulsadores, estarán conectados a los pines PD2 y PD3, que en el microcontrolador Atmega328 se vinculan a las interrupciones externas INT0 e INT1.
+Dado que esta vinculación es fija, la posición de estos pulsadores no puede modificarse. Cuando el pulsador está abierto, el pin , ya sea PD2 como PD3, queda circuitalmente “flotando”, es decir, no es ni un “1” ni un “0” lógico, circunstancia que como es sabido debe evitarse. Se abordará ese inconveniente.
+\par El programa a implementar hará lo siguiente:
+ \par - El display inicialmente mostrará el dígito “5”.
+\par - Si al presionar el pulsador conectado a PD2, el pulsador conectado a PD3 también estuviera presionado, entonces se incrementará el dígito decimal, siempre que no se supere el valor máximo, es decir “9”. Si en cambio, el pulsador conectado a PD3 no hubiera estado presionado al momento de presionar PD2, se deberá decrementar el valor decimal mostrado, siempre que no se haya alcanzado el mínimo, es decir, un “0”.
+\par En resumen, PD2 ordena un cambio de dígito y PD3 provee el sentido (incremento o decremento).
+\par  El manejo de PD2 será usando interrupciones, modalidad de flanco, en tanto el manejo de PD3 será por lectura explícita del valor instantáneo del pin.
+Se evitará que al presionar PD2 el display avance más de un dígito, existen dos formas posibles: una es realizando un delay y la segunda es colocando un capacitor indicado. Esta circunstancia indeseada se llama “rebote” y está vinculada al ruido originado en la mecánica del pulsador.
+\par Los valores de los siete segmentos de cada uno de los diez símbolos decimales están puestos en una tabla a ser almacenada en la memoria del programa.
